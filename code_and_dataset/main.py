@@ -36,7 +36,10 @@ def run(model_path, hla_a, hla_b, peptide):
     # load model
     config = Config("config_main.json")
     config.device = 'cpu'
-    state_dict = torch.load(os.path.join(BASE_DIR, model_path))
+    if torch.cuda.is_available():
+        state_dict = torch.load(os.path.join(BASE_DIR, model_path))
+    else:
+        state_dict = torch.load(os.path.join(BASE_DIR, model_path),map_location=torch.device('cpu'))
     model = Model(config)
     model.load_state_dict(state_dict)
     model.eval()
