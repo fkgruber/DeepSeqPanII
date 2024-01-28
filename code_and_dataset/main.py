@@ -50,8 +50,10 @@ def run(model_path, hla_a, hla_b, peptide,input_file,output_file):
         indf=pd.read_csv(input_file)
     else:
         indf=pd.DataFrame({"peptide":[peptide],"hla_a":[hla_a],"hla_b":[hla_b]})
+    print("Reading HLA sequences...")
     hla_sequence_A, hla_sequence_B = read_hla_sequences()
     scores=[]
+    print("Predicting...")
     for (ii,rr) in tqdm(indf.iterrows()):
         peptide=rr["peptide"]
         hla_a=rr["hla_a"]
